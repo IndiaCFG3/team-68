@@ -59,7 +59,7 @@
 
   <div class="container">
     <header class="jumbotron my-4">
-      <h1 class="display-3">Class A</h1>
+      <h6 class="display-3">Class A</h6>
       <p class="lead">Showing details for class A</p>
 
     </header>
@@ -69,7 +69,7 @@
   <form style="margin-bottom: 5em;">
       <div class="row form-group">
         <div class="dropdown">
-            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
               Select a Student
             </button>
             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -78,8 +78,21 @@
               <a class="dropdown-item" href="#">Student 3</a>
             </div>
           </div>
+          <button style="margin-left: 3em;" type="button" class="btn btn-md ">Choose Date Range</button>
+          <button style="margin-left: 3em;" type="button" class="btn btn-md ">Compare Progress</button>
+          <div style="margin-left: 3em;" class="dropdown">
+            <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Type Of Graph
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">Bar Graph</a>
+              <a class="dropdown-item" href="#">Pie Charts</a>
+              <a class="dropdown-item" href="#">Line Charts</a>
+            </div>
+            <button style="margin-left: 3em;" type="button" class="btn btn-md ">Convert to PDF</button>
+          </div>
       </div>
-      <button type="button" class="btn btn-primary btn-lg ">Submit</button>
+      <button type="button" class="btn btn-lg ">Submit</button>
   </form>
 </div>
 </div>

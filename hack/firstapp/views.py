@@ -127,6 +127,7 @@ def cfg():
 		ax[i][j].bar(select_student.columns,list(select_student.iloc[0]),label = 'Yes',color = 'c')
 		ax[i][j].set_title(date)
 	#ax.savefig('1.png')
+	k=1
 	for items in dic.items():
 		(date,l) = items
 		df = pd.DataFrame(l)
@@ -139,7 +140,8 @@ def cfg():
 		plt.ylabel('Answers')
 		plt.title('Student Analysis')
 		plt.legend()
-		plt.savefig('2.png')
+		plt.savefig('./static/assets/{}.png'.format(k))
+		k+=1
 		plt.clf()
 	df = pd.DataFrame(l)
 	df = df.rename(columns={0: "name"})
@@ -151,7 +153,7 @@ def cfg():
 	plt.ylabel('Answers')
 	plt.title('Student Analysis')
 	plt.legend()
-	plt.savefig('3.png')
+	plt.savefig('./static/assets/{}.png'.format(k))
 
 def vis(request):
 	ans=Answers.objects.all()
@@ -194,4 +196,4 @@ def vis(request):
 	# 		a.append(b)
 	# 		d[i.date]=a
 	# return HttpResponse(d)
-	return render(request,'index.html')
+	return render(request,'viewClass.html')

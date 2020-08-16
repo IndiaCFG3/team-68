@@ -122,6 +122,23 @@ plt.show()
 
 # In[ ]:
 
-
-
+Q1 -=
+[
+    {
+        'date':DateTime.now(),
+        'res':true/false
+    },
+    {
+        'date':DateTime.now(),
+        'res':true/false
+    },
+    {
+        'date':DateTime.now(),
+        'res':true/false
+    },
+    {
+        'date':DateTime.now(),
+        'res':true/false
+    },
+]
 

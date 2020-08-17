@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect
 from .models import Teacher,Student,Principal,Question,Answers
 from .forms import UserForm,TeacherForm,PrincipalForm
 from django.http import HttpResponseRedirect, HttpResponse
@@ -17,13 +17,13 @@ def index(request):
 def teacher_register(request):
 	if request.method=='POST':
 		user = User.objects.create_user(request.POST.get('username'), request.POST.get('email'), request.POST.get('password'))
-		user.save()
+		#user.save()
 		user = authenticate(username=request.POST.get('username'), password=request.POST.get('password'))
 		detail = Teacher(user=user,email=request.POST.get('email'),level=1,mobile_no=request.POST.get('mobile_no')
 			,class_id=request.POST.get('class_id'))
 		detail.save()
 		#login(request, user)
-		return render(request, 'login.html')
+		return render(request, 'index.html')
 	else:
 		return render(request, 'teacherreg.html')
 
@@ -45,12 +45,15 @@ def user_login(request):
         password = request.POST['password']
         level = request.POST['level']
         #return HttpResponse('user')
+        if level==1:
+        	detail=Teacher.objects.filter(user=request.user)
+        	return render(request, 'teacherPage.html', {'detail': details})
         user = authenticate(username=username, password=password)
         #return HttpResponse(user)
         if user is not None:
             if user.is_active:
                 #return HttpResponse('hjgj')
-                login(request, user)
+                #login(request, user)
                 if level=='1':
                     details = Teacher.objects.filter(user=request.user)
                     return render(request, 'teacherPage.html', {'detail': details})
@@ -102,12 +105,12 @@ def forma(request):
  			k.append(i.query)
  		return render(request, 'form.html',{'names':l,'ques':k})
 
-def cfg():
-	dic = {   '01/02/2020': [['a',1,0,1,0,0],['b',0,1,1,0,0],['c',1,1,1,0,1],['d',1,0,1,0,0],['e',0,1,0,1,0]],
-	          '10/03/2020': [['a',1,1,1,0,1],['b',0,1,0,0,0],['c',0,1,1,1,0],['d',1,0,0,1,0],['e',1,1,0,0,0]],
-	           '21/04/2020': [['a',0,0,1,0,1],['b',1,0,1,1,0],['c',0,1,0,1,1],['d',1,0,0,1,1],['e',0,1,1,1,1]],
-	           '15/05/2020': [['a',1,0,1,1,0],['b',0,1,1,0,0],['c',1,0,1,0,1],['d',1,1,1,0,1],['e',0,0,1,0,0]]
-	      }
+def cfg(dic):
+	# dic = {   '01/02/2020': [['a',1,0,1,0,0],['b',0,1,1,0,0],['c',1,1,1,0,1],['d',1,0,1,0,0],['e',0,1,0,1,0]],
+	#           '10/03/2020': [['a',1,1,1,0,1],['b',0,1,0,0,0],['c',0,1,1,1,0],['d',1,0,0,1,0],['e',1,1,0,0,0]],
+	#            '21/04/2020': [['a',0,0,1,0,1],['b',1,0,1,1,0],['c',0,1,0,1,1],['d',1,0,0,1,1],['e',0,1,1,1,1]],
+	#            '15/05/2020': [['a',1,0,1,1,0],['b',0,1,1,0,0],['c',1,0,1,0,1],['d',1,1,1,0,1],['e',0,0,1,0,0]]
+	#       }
 	tot = []
 	fig, ax = plt.subplots(2, 2, sharex='col', sharey='row')
 	ctr = 0
@@ -157,43 +160,43 @@ def cfg():
 
 def vis(request):
 	ans=Answers.objects.all()
-	cfg()
-	# d={}
-	# s={}
-	# for i in ans:
-	# 	try i.date in d.keys():
-	# 		a=d[i.date]
-	# 		c=i.sname
-	# 		b=[]
-	# 		e=1
-	# 		for j in a:
-	# 			if c in j:
-	# 				e=0
-	# 				if i.choice:
-	# 					j.append(1)
-	# 				else:
-	# 					j.append(0)
-	# 				b.append(j)
-	# 			else:
-	# 				b.append(j)
-	# 		if e==0:
-	# 			f = [i.sname]
-	# 			if i.choice:
-	# 				f.append(1)
-	# 			else:
-	# 				f.append(0)
-	# 			a.append(f)
-	# 		else:
-	# 			a.ppend(b)
-	# 		d[i.date]=a
-	# 	except:
-	# 		a=[]
-	# 		b=[i.sname]
-	# 		if i.choice:
-	# 			b.append(1)
-	# 		else:
-	# 			b.append(0)
-	# 		a.append(b)
-	# 		d[i.date]=a
-	# return HttpResponse(d)
+	#cfg()
+	d={}
+	s={}
+	for i in ans:
+		if i.date in d:
+			c=i.sname
+			b=[]
+			e=1
+			for j in d[i.date]:
+				if c in j:
+					e=0
+					if i.choice:
+						j.append(1)
+					else:
+						j.append(0)
+					b.append(j)
+				else:
+					b.append(j)
+			if e==1:
+				f = [i.sname]
+				if i.choice:
+					f.append(1)
+				else:
+					f.append(0)
+				d[i.date].append(f)
+			else:
+				d[i.date]=b
+		else:
+			a=[]
+			b=[i.sname]
+			if i.choice:
+				b.append(1)
+			else:
+				b.append(0)
+			a.append(b)
+			d[i.date]=a
+
+	#return HttpResponse(d.keys(),d.values())
+	cfg(d)
 	return render(request,'viewClass.html')
